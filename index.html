@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Gaza Aid — Ricerche che aiutano</title>
+  <meta name="description" content="Gaza Aid: trasforma ogni ricerca sul web in un aiuto concreto." />
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+  <link rel="preconnect" href="https://cse.google.com" crossorigin>
+  <style>
+    :root{
+      /* Colore “stile Ecosia” (chiaro, teal/menta) — modifica qui se vuoi la tinta identica */
+      --bg: #EAF5F5;
+      --ink: #0f2b2a;        /* testo principale */
+      --muted: #3b5c5a;      /* testo secondario */
+      --brand: #0ea5a5;      /* accenti / bottoni */
+      --brand-ink: #052f2e;  /* testo su bottoni chiari */
+      --card: #ffffff;       /* sfondo card */
+      --ring: rgba(14,165,165,.35);
+      --shadow: 0 10px 25px rgba(0,0,0,.06);
+      --radius: 18px;
+      --maxw: 1100px;
+    }
+
+    html,body{height:100%}
+    body{
+      margin:0; color:var(--ink); background:var(--bg);
+      font: 16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Arial,"Apple Color Emoji","Segoe UI Emoji";
+      -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+    }
+
+    /* HERO */
+    .hero{
+      width:100%; height:50vh; min-height:380px;
+      background-image:url('gaza_aid_bg_hero_optimized.jpg');
+      background-size:cover; background-position:center top; background-repeat:no-repeat;
+      display:flex; align-items:center; justify-content:center; text-align:center;
+      position:relative; isolation:isolate;
+    }
+    .hero::after{
+      /* leggera sfumatura per migliorare la leggibilità del testo */
+      content:""; position:absolute; inset:0;
+      background:linear-gradient(to bottom, rgba(0,0,0,.18), rgba(0,0,0,.02) 60%);
+      z-index:0;
+    }
+    .hero-inner{
+      z-index:1; padding:0 16px; max-width:var(--maxw); width:100%;
+    }
+    .brand{
+      display:inline-flex; align-items:center; gap:.6rem;
+      padding:.5rem 1rem; background:rgba(255,255,255,.75); backdrop-filter: blur(6px);
+      border-radius:999px; box-shadow: var(--shadow);
+      color:#0b3b3a; font-weight:600; letter-spacing:.2px;
+    }
+    .hero h1{
+      margin:16px auto 8px; font-size: clamp(28px, 6vw, 52px); line-height:1.06; color:#fff;
+      text-shadow: 0 2px 20px rgba(0,0,0,.25);
+    }
+    .hero p{ margin:0 auto 18px; max-width:760px; color:#ecfffe }
+
+    /* SEARCH WRAPPER (CSE) */
+    .search-wrap{
+      margin: 18px auto 0; max-width:820px; padding:10px;
+      background: rgba(255,255,255,.85); backdrop-filter: blur(6px);
+      border-radius: 999px; box-shadow: var(--shadow);
+      border:1px solid rgba(14,165,165,.18);
+    }
+    /* Il widget CSE inserisce il suo markup. Limitiamo l’altezza e arrotondiamo */
+    .gcse-search,.gsc-control-cse{
+      background:transparent !important; border:0 !important;
+    }
+    .gsc-input-box, input.gsc-input{
+      border-radius:999px !important;
+    }
+    .gsc-search-button-v2{
+      border-radius:999px !important;
+    }
+
+    /* SECTIONS */
+    section{ padding: 56px 16px }
+    .container{ max-width: var(--maxw); margin:0 auto }
+    .grid{
+      display:grid; gap:20px;
+      grid-template-columns: repeat(12, 1fr);
+    }
+    .card{
+      background:var(--card); border-radius:var(--radius);
+      box-shadow: var(--shadow); border:1px solid rgba(14,165,165,.10);
+      padding:22px;
+    }
+    .span-4{ grid-column: span 12 }
+    .span-6{ grid-column: span 12 }
+    .span-12{ grid-column: span 12 }
+    @media (min-width:900px){
+      .span-4{ grid-column: span 4 }
+      .span-6{ grid-column: span 6 }
+      .span-12{ grid-column: span 12 }
+    }
+
+    h2{ font-size: clamp(24px, 3.6vw, 34px); margin:0 0 8px }
+    .muted{ color:var(--muted) }
+
+    /* Stat / contatori */
+    .kpi{
+      display:flex; align-items:baseline; gap:10px
+    }
+    .kpi strong{ font-size: clamp(26px, 4vw, 40px) }
+    .kpi small{ color:var(--muted) }
+
+    /* Buttons */
+    .btn{
+      appearance:none; border:1px solid rgba(14,165,165,.3);
+      background: linear-gradient(180deg, #ffffff, #f7ffff);
+      border-radius: 999px; padding:10px 18px; cursor:pointer;
+      box-shadow: var(--shadow); color: var(--brand-ink); font-weight:600;
+    }
+    .btn:focus{ outline: 3px solid var(--ring); outline-offset:2px }
+
+    /* Newsletter */
+    .nl{
+      display:flex; gap:10px; flex-wrap:wrap;
+      background:var(--card); padding:16px; border-radius: var(--radius);
+      border:1px solid rgba(14,165,165,.12);
+    }
+    .nl input[type="email"]{
+      flex:1 1 260px; padding:12px 14px; border-radius:999px; border:1px solid rgba(14,165,165,.28);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.6);
+    }
+
+    /* Footer */
+    footer{
+      background:#e4f2f1; border-top:1px solid rgba(14,165,165,.18);
+      padding:28px 16px; color: var(--muted)
+    }
+    footer a{ color:inherit; text-decoration:none }
+    footer a:hover{ text-decoration:underline }
+
+    /* Cookie banner */
+    .cookie{
+      position:fixed; inset:auto 12px 12px 12px; z-index:9999;
+      background:#ffffff; color:var(--ink); border-radius:16px; box-shadow: var(--shadow);
+      border:1px solid rgba(14,165,165,.2); padding:14px 16px; display:none;
+    }
+    .cookie .actions{ display:flex; gap:8px; margin-top:10px; flex-wrap:wrap }
+    .cookie .actions .btn-ghost{
+      background:transparent; border:1px dashed rgba(14,165,165,.35)
+    }
+
+    /* Lang switch */
+    .lang-switch{
+      position:absolute; right:14px; top:14px; z-index:2
+    }
+    .lang-switch select{
+      appearance:none; border-radius:999px; padding:8px 12px; border:1px solid rgba(255,255,255,.65);
+      background:rgba(255,255,255,.75); backdrop-filter: blur(6px);
+    }
+  </style>
+  
+
+  <!-- Google Analytics GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TP3S3CX0L4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments)}
+    gtag('js', new Date());
+    gtag('config', 'G-TP3S3CX0L4');
+  </script>
+</head>
+
+<body>
+  <header class="hero" role="banner">
+    <div class="lang-switch" aria-label="Selettore lingua">
+      <label class="sr-only" for="langSel">Lingua</label>
+      <select id="langSel" aria-label="Language">
+        <option value="it">IT</option>
+        <option value="en">EN</option>
+        <option value="ar">AR</option>
+      </select>
+    </div>
+
+    <div class="hero-inner">
+      <span class="brand" aria-label="Logo Gaza Aid">
+        <!-- puoi sostituire con un SVG -->
+        🌱 <span data-i18n="brand">Gaza Aid</span>
+      </span>
+      <h1 data-i18n="hero_title">Trasforma ogni ricerca in un aiuto concreto</h1>
+      <p data-i18n="hero_sub">Cerca il web: i ricavi generati sostengono progetti umanitari verificati.</p>
+
+      <div class="search-wrap" role="search" aria-label="Cerca nel web con Gaza Aid">
+        <!-- Google CSE -->
+        <div class="gcse-search" data-enableHistory="true" data-autoSearchOnLoad="false"></div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" role="main">
+    <!-- Mission -->
+    <section aria-labelledby="mission">
+      <div class="container">
+        <h2 id="mission" data-i18n="mission_title">La nostra missione</h2>
+        <p class="muted" data-i18n="mission_copy">
+          Gaza Aid è una iniziativa indipendente che convoglia i proventi pubblicitari delle ricerche verso aiuti
+          umanitari. Puntiamo su trasparenza, impatto misurabile e partnership affidabili.
+        </p>
+
+        <div class="grid" style="margin-top:18px">
+          <div class="card span-4">
+            <h3 data-i18n="m1_t">Ricerca</h3>
+            <p class="muted" data-i18n="m1_c">Usi il motore di ricerca integrato per le tue ricerche quotidiane.</p>
+          </div>
+          <div class="card span-4">
+            <h3 data-i18n="m2_t">Monetizzazione</h3>
+            <p class="muted" data-i18n="m2_c">Gli annunci generano ricavi grazie a Google CSE e partnership etiche.</p>
+          </div>
+          <div class="card span-4">
+            <h3 data-i18n="m3_t">Donazione</h3>
+            <p class="muted" data-i18n="m3_c">Periodicamente devolviamo i proventi a ONG verificate e rendicontiamo tutto.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Impatto -->
+    <section aria-labelledby="impact">
+      <div class="container">
+        <h2 id="impact" data-i18n="impact_title">Il tuo impatto</h2>
+        <div class="grid">
+          <div class="card span-6">
+            <div class="kpi"><strong id="kpi-searches">0</strong> <small data-i18n="kpi1">Ricerche effettuate</small></div>
+            <p class="muted" data-i18n="kpi1_note">Indicatore in tempo reale (demo). Collegalo ai tuoi dati quando pronti.</p>
+          </div>
+          <div class="card span-6">
+            <div class="kpi"><strong id="kpi-donations">0€</strong> <small data-i18n="kpi2">Donazioni stimate</small></div>
+            <p class="muted" data-i18n="kpi2_note">Stima basata sul rendimento medio per ricerca.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Come funziona / Trasparenza -->
+    <section aria-labelledby="how">
+      <div class="container grid">
+        <div class="card span-6">
+          <h2 id="how" data-i18n="how_title">Come funziona</h2>
+          <ol class="muted" style="padding-left:18px">
+            <li data-i18n="how1">Imposta Gaza Aid come pagina iniziale o motore predefinito.</li>
+            <li data-i18n="how2">Cerca normalmente: usiamo Google CSE per risultati affidabili.</li>
+            <li data-i18n="how3">Condividiamo report periodici su ricavi e donazioni.</li>
+          </ol>
+          <button class="btn" data-i18n="cta_default">Imposta come predefinito</button>
+        </div>
+        <div class="card span-6">
+          <h2 data-i18n="transparency_title">Trasparenza</h2>
+          <p class="muted" data-i18n="transparency_copy">
+            Pubblicheremo report pubblici mensili con prove di versamento, costi operativi e criteri di selezione delle ONG.
+          </p>
+          <a class="btn" href="#" aria-label="Vai all'area report" data-i18n="see_reports">Vedi report</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section aria-labelledby="newsletter">
+      <div class="container">
+        <h2 id="newsletter" data-i18n="nl_title">Resta aggiornato</h2>
+        <p class="muted" data-i18n="nl_copy">Iscriviti per ricevere aggiornamenti su impatto, nuovi partner e report.</p>
+        <form class="nl" onsubmit="event.preventDefault(); alert(i18n.t('nl_ok'))" aria-label="Iscrizione newsletter">
+          <input type="email" required placeholder="email@esempio.com" aria-label="Email" />
+          <button class="btn" type="submit" data-i18n="nl_btn">Iscriviti</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer role="contentinfo">
+    <div class="container grid">
+      <div class="span-6">
+        <strong>Gaza Aid</strong><br/>
+        <span class="muted" data-i18n="foot_mission">Un motore solidale, semplice, trasparente.</span>
+      </div>
+      <div class="span-6">
+        <a href="#" data-i18n="foot_privacy">Privacy</a> ·
+        <a href="#" data-i18n="foot_cookies">Cookie</a> ·
+        <a href="#" data-i18n="foot_contact">Contatti</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Cookie banner -->
+  <div class="cookie" id="cookie">
+    <div data-i18n="cookie_text">Usiamo cookie tecnici e di misurazione anonima per migliorare l’esperienza.</div>
+    <div class="actions">
+      <button class="btn" id="cookie-accept" data-i18n="cookie_accept">Accetta</button>
+      <button class="btn btn-ghost" id="cookie-decline" data-i18n="cookie_decline">Rifiuta non essenziali</button>
+    </div>
+  </div>
+
+  <!-- i18n, CSE e logica -->
+  <script>
+    // --- GOOGLE CSE (Programmable Search Engine)
+    (function() {
+      var cx = 'e36db80eb79a24fd4';
+      var gcse = document.createElement('script');
+      gcse.type = 'text/javascript';
+      gcse.async = true;
+      gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(gcse, s);
+    })();
+
+    // --- COOKIE BANNER (base)
+    (function(){
+      const key='ga_cookie_ok';
+      const el=document.getElementById('cookie');
+      const yes=document.getElementById('cookie-accept');
+      const no=document.getElementById('cookie-decline');
+      if(!localStorage.getItem(key)){ el.style.display='block'; }
+      yes.addEventListener('click',()=>{ localStorage.setItem(key,'1'); el.remove(); });
+      no.addEventListener('click',()=>{ localStorage.setItem(key,'0'); el.remove(); });
+    })();
+
+    // --- KPI demo
+    (function(){
+      const searches = document.getElementById('kpi-searches');
+      const donations = document.getElementById('kpi-donations');
+      let n = 12480; // demo
+      function fmtEUR(x){ return x.toLocaleString(undefined,{style:'currency', currency:'EUR'}); }
+      setInterval(()=> {
+        n += Math.floor(Math.random()*3); // incremento fittizio
+        searches.textContent = n.toLocaleString();
+        const est = n * 0.002;           // ipotesi 0,2 cent / ricerca (demo)
+        donations.textContent = fmtEUR(est);
+      }, 1600);
+    })();
+
+    // --- i18n minimal (IT/EN/AR) con auto-detect
+    const i18n = (function(){
+      const dict = {
+        it: {
+          brand:"Gaza Aid",
+          hero_title:"Trasforma ogni ricerca in un aiuto concreto",
+          hero_sub:"Cerca il web: i ricavi generati sostengono progetti umanitari verificati.",
+          mission_title:"La nostra missione",
+          mission_copy:"Gaza Aid è una iniziativa indipendente che convoglia i proventi pubblicitari delle ricerche verso aiuti umanitari. Puntiamo su trasparenza, impatto misurabile e partnership affidabili.",
+          m1_t:"Ricerca", m1_c:"Usi il motore di ricerca integrato per le tue ricerche quotidiane.",
+          m2_t:"Monetizzazione", m2_c:"Gli annunci generano ricavi grazie a Google CSE e partnership etiche.",
+          m3_t:"Donazione", m3_c:"Periodicamente devolviamo i proventi a ONG verificate e rendicontiamo tutto.",
+          impact_title:"Il tuo impatto",
+          kpi1:"Ricerche effettuate", kpi1_note:"Indicatore in tempo reale (demo). Collegalo ai tuoi dati quando pronti.",
+          kpi2:"Donazioni stimate", kpi2_note:"Stima basata sul rendimento medio per ricerca.",
+          how_title:"Come funziona",
+          how1:"Imposta Gaza Aid come pagina iniziale o motore predefinito.",
+          how2:"Cerca normalmente: usiamo Google CSE per risultati affidabili.",
+          how3:"Condividiamo report periodici su ricavi e donazioni.",
+          cta_default:"Imposta come predefinito",
+          transparency_title:"Trasparenza",
+          transparency_copy:"Pubblicheremo report pubblici mensili con prove di versamento, costi operativi e criteri di selezione delle ONG.",
+          see_reports:"Vedi report",
+          nl_title:"Resta aggiornato",
+          nl_copy:"Iscriviti per ricevere aggiornamenti su impatto, nuovi partner e report.",
+          nl_btn:"Iscriviti",
+          nl_ok:"Grazie! Ti aggiorneremo presto.",
+          foot_mission:"Un motore solidale, semplice, trasparente.",
+          foot_privacy:"Privacy", foot_cookies:"Cookie", foot_contact:"Contatti",
+          cookie_text:"Usiamo cookie tecnici e di misurazione anonima per migliorare l’esperienza.",
+          cookie_accept:"Accetta", cookie_decline:"Rifiuta non essenziali"
+        },
+        en: {
+          brand:"Gaza Aid",
+          hero_title:"Turn every search into real help",
+          hero_sub:"Search the web: ad revenue supports verified humanitarian projects.",
+          mission_title:"Our Mission",
+          mission_copy:"Gaza Aid channels search ad revenue into humanitarian aid with transparency, measurable impact, and trusted partners.",
+          m1_t:"Search", m1_c:"Use the integrated engine for your everyday queries.",
+          m2_t:"Monetization", m2_c:"Ads generate revenue via Google CSE and ethical partnerships.",
+          m3_t:"Donation", m3_c:"We periodically donate proceeds to vetted NGOs and publish reports.",
+          impact_title:"Your Impact",
+          kpi1:"Searches performed", kpi1_note:"Live indicator (demo). Connect to your data later.",
+          kpi2:"Estimated donations", kpi2_note:"Estimate based on average revenue per search.",
+          how_title:"How it works",
+          how1:"Set Gaza Aid as your home page or default engine.",
+          how2:"Search as usual: we rely on Google CSE for reliable results.",
+          how3:"We publish periodic reports about revenue and donations.",
+          cta_default:"Set as default",
+          transparency_title:"Transparency",
+          transparency_copy:"We will publish monthly public reports with proof of transfers, operating costs, and NGO selection criteria.",
+          see_reports:"See reports",
+          nl_title:"Stay in the loop",
+          nl_copy:"Subscribe for updates on impact, partners and reports.",
+          nl_btn:"Subscribe",
+          nl_ok:"Thanks! We'll keep you posted.",
+          foot_mission:"A simple, transparent, impact-first search.",
+          foot_privacy:"Privacy", foot_cookies:"Cookies", foot_contact:"Contact",
+          cookie_text:"We use technical and anonymous analytics cookies to improve your experience.",
+          cookie_accept:"Accept", cookie_decline:"Decline non-essential"
+        },
+        ar: {
+          brand:"غزة إيد",
+          hero_title:"حوِّل كل عملية بحث إلى مساعدة حقيقية",
+          hero_sub:"ابحث على الويب: تذهب العائدات لدعم مشاريع إنسانية موثوقة.",
+          mission_title:"مهمتنا",
+          mission_copy:"توجّه غزة إيد عائدات الإعلانات نحو المساعدات الإنسانية بشفافية وتأثير قابل للقياس وشراكات موثوقة.",
+          m1_t:"بحث", m1_c:"استخدم محرك البحث المدمج لأسئلتك اليومية.",
+          m2_t:"تحقيق الدخل", m2_c:"تُولِّد الإعلانات عائدًا من خلال Google CSE وشراكات أخلاقية.",
+          m3_t:"تبرع", m3_c:"نتبرع دوريًا بالعائدات لمنظمات موثوقة وننشر تقارير.",
+          impact_title:"أثرك",
+          kpi1:"عمليات البحث", kpi1_note:"مؤشر فوري (تجريبي). اربطه ببياناتك لاحقًا.",
+          kpi2:"التبرعات المقدّرة", kpi2_note:"تقدير يعتمد على متوسط العائد لكل عملية بحث.",
+          how_title:"كيف يعمل",
+          how1:"عيّن غزة إيد كصفحة رئيسية أو محرك افتراضي.",
+          how2:"ابحث كالمعتاد: نعتمد على Google CSE لنتائج موثوقة.",
+          how3:"ننشر تقارير دورية حول الإيرادات والتبرعات.",
+          cta_default:"اجعله الافتراضي",
+          transparency_title:"الشفافية",
+          transparency_copy:"سننشر تقارير شهرية عامة مع إثبات التحويلات والتكاليف التشغيلية ومعايير اختيار المنظمات.",
+          see_reports:"عرض التقارير",
+          nl_title:"ابقَ على اطلاع",
+          nl_copy:"اشترك لتصلك أحدث المستجدات حول الأثر والشركاء والتقارير.",
+          nl_btn:"اشترك",
+          nl_ok:"شكرًا! سنطلعك على كل جديد.",
+          foot_mission:"محرك بحث بسيط وشفاف يضع الأثر أولًا.",
+          foot_privacy:"الخصوصية", foot_cookies:"الكوكيز", foot_contact:"اتصل بنا",
+          cookie_text:"نستخدم ملفات تعريف ارتباط تقنية وتحليلات مجهولة لتحسين تجربتك.",
+          cookie_accept:"موافقة", cookie_decline:"رفض غير الضروري"
+        }
+      };
+
+      function apply(lang){
+        const l = dict[lang] ? lang : 'it';
+        document.documentElement.lang = l;
+        document.querySelectorAll('[data-i18n]').forEach(el=>{
+          const key = el.getAttribute('data-i18n');
+          if(dict[l][key]) el.textContent = dict[l][key];
+        });
+      }
+
+      function autodetect(){
+        const nav = (navigator.language || 'it').slice(0,2).toLowerCase();
+        if(['it','en','ar'].includes(nav)) return nav;
+        return 'it';
+      }
+
+      return { t:(k)=>dict[document.documentElement.lang||'it'][k]||k, apply, autodetect };
+    })();
+
+    // init language
+    (function(){
+      const sel = document.getElementById('langSel');
+      const initial = i18n.autodetect();
+      sel.value = initial;
+      i18n.apply(initial);
+      sel.addEventListener('change', ()=> i18n.apply(sel.value));
+    })();
+  </script>
+
+  <!-- Accessibilità minore: classe sr-only -->
+  <style>
+    .sr-only{
+      position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden;
+      clip:rect(0,0,0,0); white-space:nowrap; border:0;
+    }
+  </style>
+</body>
+</html>
